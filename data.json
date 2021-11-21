@@ -8,7 +8,61 @@
             "type": "Fast food",
             "pricelvl": "€",
             "location": "Kaakkuri",
-            "path": "/"
+            "path": "/restaurant/1",
+            "menu": [
+                {
+                    "id": 1,
+                    "name": "Burgers",
+                    "products": [
+                        {
+                            "id": 1,
+                            "name": "WHOPPER",
+                            "description": "Flame grilled beef steak, fresh tomato and lettuce, pickles, onion, ketchup, mayonnaise, sesame bun.",
+                            "price": 5.95,
+                            "img": "https://imageproxy.creditornot.com/wolt-master-images/menu-images/60768c6c094fb81ef5fb4d38/9102bccc-36e6-11ec-91b0-8e3983eccded_bk_wolt_1200x800px_whopper_102021.jpeg",
+                            "alt": "WHOPPER"
+                        },
+                        {
+                            "id": 2,
+                            "name": "Cheeseburger",
+                            "description": "Flame grilled beef steak, cheese, pickles, ketchup, mustard, sesame seed roll.",
+                            "price": 1.95,
+                            "img": "https://imageproxy.wolt.com/menu/menu-images/5b0667eebeebcc000ddb40c1/861f20d8-4376-11ec-a01f-3204005afd23_bk_wolt_juustohampurilainen_1200x800_102021.jpeg",
+                            "alt": "Cheeseburger"
+                        },
+                        {
+                            "id": 3,
+                            "name": "Crispy CHICKEN burger",
+                            "description": "Crispy fried chicken fillet, fresh salad and tomato, mayonnaise, roll of sesame seeds.",
+                            "price": 3.95,
+                            "img": "https://imageproxy.creditornot.com/wolt-master-images/menu-images/60768c6c094fb81ef5fb4d38/7361d8f6-36eb-11ec-bdd9-96b5aa0f3bee_bk_wolt_1200x800px_crispy_chicken_102021.jpeg",
+                            "alt": "Cheeseburger"
+                        }
+                    ]    
+                },
+                {
+                    "id": 2,
+                    "name": "Meals",
+                    "products": [
+                        {
+                            "id": 1,
+                            "name": "Bacon King meal",
+                            "description": "Two flame grilled beef steaks, cheese, eight slices of bacon, mayonnaise, ketchup, a roll of sesame seeds.",
+                            "price": 12.95,
+                            "img": "https://imageproxy.creditornot.com/wolt-master-images/menu-images/60768c6c094fb81ef5fb4d38/d014a1a4-36e7-11ec-8fd3-8e3983eccded_bk_wolt_1200x800px_bacon_king_102021.jpeg",
+                            "alt": "Bacon King"
+                        },
+                        {
+                            "id": 2,
+                            "name": "Steakhouse meal",
+                            "description": "Flame grilled beef steak, cheese, bacon, fresh tomato and lettuce, roasted onion, BBQ sauce, corn-grilled roll.",
+                            "price": 11.95,
+                            "img": "https://imageproxy.creditornot.com/wolt-master-images/menu-images/60768c6c094fb81ef5fb4d38/0140352c-36e8-11ec-9216-96b5aa0f3bee_bk_wolt_1200x800px_steakhouse_102021.jpeg",
+                            "alt": "Steakhouse"
+                        }
+                    ]
+                }
+            ]
         },
         {
             "id": 2,
@@ -18,7 +72,7 @@
             "type": "Fast food",
             "pricelvl": "€",
             "location": "Rotuaari",
-            "path": "/"
+            "path": "/restaurant/2"
         },
         {
             "id": 3,
@@ -28,7 +82,7 @@
             "type": "Fast food",
             "pricelvl": "€",
             "location": "Rotuaari",
-            "path": "/"
+            "path": "/restaurant/3"
         },
         {
             "id": 4,
@@ -38,47 +92,47 @@
             "type": "Fast food",
             "pricelvl": "€€",
             "location": "Rotuaari",
-            "path": "/"
+            "path": "/restaurant/4"
         },
         {
             "id": 5,
             "name": "Hai Long",
             "img": "https://imageproxy.wolt.com/venue/58f658efff59a629eb533286/6540f8db40d780c56ef3b00f27502047",
             "alt": "Hai Long",
-            "type": "Casual",
+            "type": "Casual dining",
             "pricelvl": "€€",
             "location": "Rotuaari",
-            "path": "/"
+            "path": "/restaurant/5"
         },
         {
             "id": 6,
             "name": "Picnic",
             "img": "https://imageproxy.wolt.com/venue/59ce1d5b8c9e7d24fca64c82/fae0388c-e209-11ea-b577-1ea5ebfc55c9_picnic.jpeg",
             "alt": "Picnic",
-            "type": "Cafe",
+            "type": "Fast casual",
             "pricelvl": "€",
             "location": "Valkea",
-            "path": "/"
+            "path": "/restaurant/6"
         },
         {
             "id": 7,
             "name": "Arnolds",
             "img": "https://imageproxy.wolt.com/venue/5e2eef1990b82871bb9b1592/e665060e-410e-11ea-86e5-0a5864732c44_arnolds.jpeg",
             "alt": "Arnolds",
-            "type": "Cafe",
+            "type": "Fast casual",
             "pricelvl": "€",
             "location": "Valkea",
-            "path": "/"
+            "path": "/restaurant/7"
         },
         {
             "id": 8,
             "name": "Pancho Villa",
             "img": "https://imageproxy.wolt.com/venue/58f4da0faf622e14aa5e8d34/94db0dca-a1b0-11eb-9e70-c25a670ede32_wolt_profiili_3.jpg",
             "alt": "Pancho Villa",
-            "type": "Casual",
+            "type": "Casual dining",
             "pricelvl": "€€",
             "location": "Rotuaari",
-            "path": "/"
+            "path": "/restaurant/8"
         },
         {
             "id": 9,
@@ -88,7 +142,7 @@
             "type": "Fast food",
             "pricelvl": "€€",
             "location": "Kaakkuri",
-            "path": "/"
+            "path": "/restaurant/9"
         }
     ],
     "users": [
