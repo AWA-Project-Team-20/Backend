@@ -4,6 +4,9 @@ var port = process.env.PORT || 3000;
 const data = require('./data.json')
 const cors = require('cors')
 
+app.use(express.json());
+app.use(cors());
+
 const { Pool, Client } = require('pg')
 const pool = new Pool({
     user: 'valer',
@@ -22,18 +25,8 @@ const client = new Client({
 })
 client.connect();
 
-app.use(express.json());
-app.use(cors());
-
-async function testAsync() {
-var res = await client.query("SELECT * FROM customer");
-res.rows.forEach(row=>{
-    console.log(row);
-});
-await client.end();
-}
-
-testAsync();
+const customerRouter = require("./routes/customer")
+app.use("/customer", customerRouter)
 
 app.listen(port, function () {
     console.log(`App listening at http://localhost:${port}`)
