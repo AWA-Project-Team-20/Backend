@@ -23,50 +23,42 @@ const client = new Client({
 client.connect();
 
 // GET all customers
-router.get("/all", (req, res) => {
-    pool
-  .query('SELECT * FROM customer')
-  .then(res => console.log(res.rows))
-  .catch(err =>
-    setImmediate(() => {
-      throw err
-    })
-  )
+router.get("/all", async (req, res) => {
+  try {
+    const restaurants = await pool.query("SELECT * FROM customer");
+    res.json(restaurants.rows);
+  } catch (err) {
+    console.error(err.message);
+  }
 })
 
 // GET a single customer with the requested customer_id
-router.get("/id/:id", (req, res) => {
-    pool
-  .query(`SELECT * FROM customer WHERE customer_id = ${req.params.id}`)
-  .then(res => console.log(res.rows))
-  .catch(err =>
-    setImmediate(() => {
-      throw err
-    })
-  )
+router.get("/id/:id", async (req, res) => {
+  try {
+    const restaurants = await pool.query(`SELECT * FROM customer WHERE customer_id = ${req.params.id}`);
+    res.json(restaurants.rows);
+  } catch (err) {
+    console.error(err.message);
+  }
 })
 
 
 // DELETE a customer with the requested customer_id
-router.delete("/id/:id", (req, res) => {
-    pool
-  .query(`DELETE FROM customer WHERE customer_id = ${req.params.id}`)
-  .then()
-  .catch(err =>
-    setImmediate(() => {
-      throw err
-    })
-  )
+router.delete("/id/:id", async (req, res) => {
+  try {
+    const restaurants = await pool.query(`DELETE FROM customer WHERE customer_id = ${req.params.id}`);
+    res.json(restaurants.rows);
+  } catch (err) {
+    console.error(err.message);
+  }
 })
 
 // POST a single customer with the requested login and password
-router.post("/new/:login/:password", (req, res) => {
-    pool
-  .query(`INSERT INTO customer(login, password) VALUES ('${req.params.login}', '${req.params.password}');`)
-  .then()
-  .catch(err =>
-    setImmediate(() => {
-      throw err
-    })
-  )
+router.post("/new/:login/:password", async (req, res) => {
+  try {
+    const restaurants = await pool.query(`INSERT INTO customer(login, password) VALUES ('${req.params.login}', '${req.params.password}');`);
+    res.json(restaurants.rows);
+  } catch (err) {
+    console.error(err.message);
+  }
 })
