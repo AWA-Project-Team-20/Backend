@@ -1,6 +1,6 @@
 const express = require('express')
 const app = express()
-var port = process.env.PORT || 3000;
+var port = process.env.PORT || 4000;
 const data = require('./data.json')
 const cors = require('cors')
 
@@ -27,6 +27,9 @@ client.connect();
 
 const customerRouter = require("./routes/customer")
 app.use("/customer", customerRouter)
+
+const restaurantsRouter = require("./routes/restaurants")
+app.use("/restaurants", restaurantsRouter)
 
 app.listen(port, function () {
     console.log(`App listening at http://localhost:${port}`)
