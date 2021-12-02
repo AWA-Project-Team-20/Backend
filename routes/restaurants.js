@@ -1,5 +1,7 @@
 const express = require("express");
 const router = express.Router();
+module.exports = router;
+
 const pool = require("../connection");
 
 router.get("/", async (req, res) => {
@@ -11,4 +13,3 @@ router.get("/", async (req, res) => {
   }
 })
 
-module.exports = router;

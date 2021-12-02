@@ -17,7 +17,11 @@ router.get("/all", async (req, res) => {
 // GET a single customer with the requested customer_id
 router.get("/id/:id", async (req, res) => {
   try {
-    const restaurants = await pool.query(`SELECT * FROM customer WHERE customer_id = ${req.params.id}`);
+    const restaurants = await pool.query
+    (`
+    SELECT * FROM customer 
+    WHERE customer_id = ${req.params.id}
+    `);
     res.json(restaurants.rows);
   } catch (err) {
     console.error(err.message);
@@ -28,7 +32,11 @@ router.get("/id/:id", async (req, res) => {
 // DELETE a customer with the requested customer_id
 router.delete("/id/:id", async (req, res) => {
   try {
-    const restaurants = await pool.query(`DELETE FROM customer WHERE customer_id = ${req.params.id}`);
+    const restaurants = await pool.query
+    (`
+    DELETE FROM customer 
+    WHERE customer_id = ${req.params.id}
+    `);
     res.json(restaurants.rows);
   } catch (err) {
     console.error(err.message);
@@ -38,7 +46,11 @@ router.delete("/id/:id", async (req, res) => {
 // POST a single customer with the requested login and password
 router.post("/new/:login/:password", async (req, res) => {
   try {
-    const restaurants = await pool.query(`INSERT INTO customer(login, password) VALUES ('${req.params.login}', '${req.params.password}');`);
+    const restaurants = await pool.query
+    (`
+    INSERT INTO customer(login, password)
+     VALUES ('${req.params.login}', '${req.params.password}');
+    `);
     res.json(restaurants.rows);
   } catch (err) {
     console.error(err.message);
