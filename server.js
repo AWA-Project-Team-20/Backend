@@ -15,6 +15,9 @@ app.use("/restaurants", restaurantsRouter);
 const managerRouter = require("./routes/manager");
 app.use("/manager/restaurant", managerRouter);
 
+const menuRouter = require("./routes/menu");
+app.use("/menu", menuRouter);
+
 app.listen(port, () => {
     console.log(`App listening at http://localhost:${port}`);
 });

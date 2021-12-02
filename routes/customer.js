@@ -2,25 +2,7 @@ const express = require("express")
 const router = express.Router()
 module.exports = router;
 
-// router.use(logger)
-
-const { Pool, Client } = require('pg')
-const pool = new Pool({
-    user: 'valer',
-    password: 'LMori1011S',
-    server: 'localhost',
-    database: 'DS',
-    port: 5432
-})
-
-const client = new Client({
-    user: 'valer',
-    password: 'LMori1011S',
-    server: 'localhost',
-    database: 'DS',
-    port: 5432
-})
-client.connect();
+const pool = require("../connection");
 
 // GET all customers
 router.get("/all", async (req, res) => {
@@ -57,6 +39,21 @@ router.delete("/id/:id", async (req, res) => {
 router.post("/new/:login/:password", async (req, res) => {
   try {
     const restaurants = await pool.query(`INSERT INTO customer(login, password) VALUES ('${req.params.login}', '${req.params.password}');`);
+    res.json(restaurants.rows);
+  } catch (err) {
+    console.error(err.message);
+  }
+})
+
+// Changing customer password (questionable if needed)
+router.post("/new_password/:id/:new_password", async (req, res) => {
+  try {
+    const restaurants = await pool.query
+    (`
+    UPDATE customer
+    SET password = '${req.params.new_password}'
+    WHERE customer_id = ${req.params.id};
+    `);
     res.json(restaurants.rows);
   } catch (err) {
     console.error(err.message);
