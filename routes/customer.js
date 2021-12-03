@@ -62,7 +62,7 @@ router.post("/", async (req, res) => {
 })
 
 // Changing customer password (questionable if needed)
-router.post("/", async (req, res) => {
+router.put("/", async (req, res) => {
   try {
     const { id, new_password  } = req.body;
     const customers = await pool.query

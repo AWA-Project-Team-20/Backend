@@ -44,7 +44,7 @@ router.get("/:id", async (req, res) => {
     }
   })
 
-// DELETE a menu position by its ID
+// DELETE a menu position by its ID (QUESTIONABLE IF NEEDED AT ALL)
 router.delete("/:id", async (req, res) => {
     try {
       const products = await pool.query
