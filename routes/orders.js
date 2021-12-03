@@ -1,3 +1,6 @@
+// will be done later on
+
+
 const express = require("express")
 const router = express.Router()
 module.exports = router;
@@ -5,10 +8,10 @@ module.exports = router;
 const pool = require("../connection");
 
 // GET all orders
-router.get("/all", async (req, res) => {
+router.get("/", async (req, res) => {
     try {
-      const restaurants = await pool.query("SELECT * FROM orders");
-      res.json(restaurants.rows);
+      const orders = await pool.query("SELECT * FROM orders");
+      res.json(orders.rows);
     } catch (err) {
       console.error(err.message);
     }
@@ -17,12 +20,12 @@ router.get("/all", async (req, res) => {
 // GET a single order by own id
 router.get("/id/:id", async (req, res) => {
   try {
-    const restaurants = await pool.query
+    const orders = await pool.query
     (`
     SELECT * FROM orders 
     WHERE orders_id = ${req.params.id}
     `);
-    res.json(restaurants.rows);
+    res.json(orders.rows);
   } catch (err) {
     console.error(err.message);
   }
@@ -31,12 +34,12 @@ router.get("/id/:id", async (req, res) => {
 // DELETE an order
 router.delete("/id/:id", async (req, res) => {
     try {
-      const restaurants = await pool.query
+      const orders = await pool.query
       (`
       DELETE FROM orders
       WHERE orders_id = ${req.params.id}
       `);
-      res.json(restaurants.rows);
+      res.json(orders.rows);
     } catch (err) {
       console.error(err.message);
     }

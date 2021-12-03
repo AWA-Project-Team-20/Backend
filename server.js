@@ -15,8 +15,8 @@ app.use("/restaurants", restaurantsRouter);
 const managerRouter = require("./routes/manager");
 app.use("/manager/restaurant", managerRouter);
 
-const menuRouter = require("./routes/menu");
-app.use("/menu", menuRouter);
+const productRouter = require("./routes/product");
+app.use("/product", productRouter);
 
 const ordersRouter = require("./routes/orders");
 app.use("/orders", ordersRouter);
