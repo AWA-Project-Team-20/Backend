@@ -21,6 +21,9 @@ app.use("/product", productRouter);
 const ordersRouter = require("./routes/orders");
 app.use("/orders", ordersRouter);
 
+const authRouter = require("./routes/jwtAuth");
+app.use("/auth", authRouter);
+
 app.listen(port, () => {
     console.log(`App listening at http://localhost:${port}`);
 });
