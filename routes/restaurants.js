@@ -6,7 +6,7 @@ const pool = require("../connection");
 
 router.get("/", async (req, res) => {
   try {
-    const restaurants = await pool.query("SELECT * FROM restaurant");
+    const restaurants = await pool.query("SELECT * FROM restaurant WHERE name IS NOT NULL");
     res.json(restaurants.rows);
   } catch (err) {
     console.error(err.message);
