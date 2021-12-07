@@ -20,7 +20,7 @@ router.get("/:id", async (req, res) => {
       const products = await pool.query
       (`
       SELECT * FROM product
-      WHERE product_id = ${req.params.id}
+      WHERE restaurant_id = ${req.params.id}
       `);
       res.json(products.rows);
     } catch (err) {
