@@ -1,6 +1,7 @@
 const express = require("express")
 const router = express.Router()
 module.exports = router;
+const authorize = require("../middlewares/authorize");
 
 const pool = require("../connection");
 
@@ -29,18 +30,36 @@ router.get("/:id", async (req, res) => {
   })
 
   // POST new product position
-  router.post("/", async (req, res) => {
+  router.post("/", authorize, async (req, res) => {
     try {
-      const { restaurant_key, product_name, product_description, product_price, product_category, product_image } = req.body;
-      const products = await pool.query
+      const { restaurant_id, name, description, price, category, image_url } = req.body;
+      const product = await pool.query
       (`
-      INSERT INTO product (restaurant_key, product_name, product_description, product_price, product_category, product_image)
+      INSERT INTO product (restaurant_id, name, description, price, category, image_url)
       VALUES ($1, $2, $3, $4, $5, $6)
       RETURNING *`,
-      [restaurant_key, product_name, product_description, product_price, product_category, product_image]);
-      res.json(products.rows);
+      [restaurant_id, name, description, price, category, image_url]);
+      res.json(product.rows[0]);
     } catch (err) {
       console.error(err.message);
+    }
+  })
+
+  // Update product
+  router.put("/", authorize, async (req, res) => {
+    try {
+      if (req.user.type === "consumer") {
+        return res.status(403).json({ error: "You are not a manager!" });
+      }
+      const {name, description, price, category, image_url, product_id } = req.body;
+      const updatedProduct = await pool.query(
+          'UPDATE product SET name = $1, description = $2, price = $3, category = $4, image_url = $5 WHERE product_id = $6 RETURNING *',
+          [name, description, price, category, image_url, product_id]
+      );
+      res.json(updatedProduct.rows[0]);
+  
+    } catch (err) {
+      console.error(err);        
     }
   })
 

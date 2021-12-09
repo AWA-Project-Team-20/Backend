@@ -18,9 +18,9 @@ router.get("/:id", async (req, res) => {
     const restaurants = await pool.query
     (`
     SELECT * FROM restaurant
-    WHERE restaurant_id = ${req.params.id}
+    WHERE id = ${req.params.id}
     `);
-    res.json(restaurants.rows);
+    res.json(restaurants.rows[0]);
   } catch (err) {
     console.error(err.message);
   }
