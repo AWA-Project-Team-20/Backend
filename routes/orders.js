@@ -1,33 +1,47 @@
-// will be done later on
-
-
 const express = require("express")
 const router = express.Router()
-module.exports = router;
-
 const pool = require("../connection");
+const authorize = require("../middlewares/authorize");
 
-// GET all orders
-router.get("/", async (req, res) => {
-    try {
-      const orders = await pool.query("SELECT * FROM orders");
-      res.json(orders.rows);
-    } catch (err) {
-      console.error(err.message);
-    }
-})
-
-// GET a single order by own id
-router.get("/id/:id", async (req, res) => {
+// GET orders of customer/manager
+router.get("/", authorize, async (req, res) => {
   try {
-    const orders = await pool.query
-    (`
-    SELECT * FROM orders 
-    WHERE orders_id = ${req.params.id}
-    `);
-    res.json(orders.rows);
+    if (req.user.type === "consumer") {
+      const orders = await pool.query
+      (`SELECT * FROM "order" WHERE customer_id = ${req.user.id}`);
+      res.json(orders.rows);
+    }
+    else {
+      const orders = await pool.query
+      (`SELECT * FROM "order", restaurant WHERE restaurant_id = ${req.user.id}`);
+      res.json(orders.rows);
+    }
   } catch (err) {
     console.error(err.message);
+  }
+})
+
+// GET order details
+router.get("/:id", async (req, res) => {
+  try {
+    const orderDetails = await pool.query
+    (`SELECT * FROM order_contents, product WHERE order_id = ${req.params.id} `);
+    res.json(orderDetails.rows)
+  } catch (err) {
+    console.error(err)  
+  }
+})
+
+router.put("/", authorize, async (req, res) => {
+  try {
+    const { order_id } = req.body;
+    const updatedOrder = await pool.query(
+        `UPDATE "order" SET status = 'Delivered' WHERE order_id = $1 RETURNING *`,
+        [order_id]
+    );
+    res.json(updatedOrder.rows[0]);
+  } catch (err) {
+    console.error(err);        
   }
 })
 
@@ -45,9 +59,8 @@ router.delete("/id/:id", async (req, res) => {
     }
 })
 
+module.exports = router;
+
 // POST
 
 // Change
-
-// how are we going to manage the menu positions inside an order?
-// I am so fucking lost at this point..
