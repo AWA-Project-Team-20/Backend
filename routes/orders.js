@@ -8,12 +8,12 @@ router.get("/", authorize, async (req, res) => {
   try {
     if (req.user.type === "consumer") {
       const orders = await pool.query
-      (`SELECT * FROM "order" WHERE customer_id = ${req.user.id}`);
+      (`SELECT * FROM orders WHERE customer_id = ${req.user.id}`);
       res.json(orders.rows);
     }
     else {
       const orders = await pool.query
-      (`SELECT * FROM "order", restaurant WHERE restaurant_id = ${req.user.id}`);
+      (`SELECT * FROM orders WHERE restaurant_id = ${req.user.id}`);
       res.json(orders.rows);
     }
   } catch (err) {
@@ -25,7 +25,7 @@ router.get("/", authorize, async (req, res) => {
 router.get("/:id", async (req, res) => {
   try {
     const orderDetails = await pool.query
-    (`SELECT * FROM order_contents, product WHERE order_id = ${req.params.id} `);
+    (`SELECT * FROM order_contents, products WHERE order_id = ${req.params.id} `);
     res.json(orderDetails.rows)
   } catch (err) {
     console.error(err)  
@@ -35,10 +35,10 @@ router.get("/:id", async (req, res) => {
 // Update order status
 router.put("/", authorize, async (req, res) => {
   try {
-    const { order_id, status } = req.body;
+    const { order_id, order_status } = req.body;
     const updatedOrder = await pool.query(
-        `UPDATE "order" SET status = $1 WHERE order_id = $2 RETURNING *`,
-        [status, order_id]
+        `UPDATE orders SET order_status = $1 WHERE order_id = $2 RETURNING *`,
+        [order_status, order_id]
     );
     res.json(updatedOrder.rows[0]);
   } catch (err) {
@@ -52,7 +52,7 @@ router.delete("/id/:id", async (req, res) => {
       const orders = await pool.query
       (`
       DELETE FROM orders
-      WHERE orders_id = ${req.params.id}
+      WHERE order_id = ${req.params.id}
       `);
       res.json(orders.rows);
     } catch (err) {

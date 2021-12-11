@@ -9,8 +9,8 @@ router.post('/login', async (req, res) => {
     try {
         const { email, password } = req.body;
 
-        const consumer = await pool.query('SELECT * FROM consumer WHERE email = $1', [email] );
-        const manager = await pool.query('SELECT * FROM restaurant WHERE email = $1', [email] );
+        const consumer = await pool.query('SELECT * FROM customers WHERE email = $1', [email] );
+        const manager = await pool.query('SELECT * FROM restaurants WHERE email = $1', [email] );
         
         // Check if the user email is found and is it consumer or manager
         let user
@@ -18,7 +18,7 @@ router.post('/login', async (req, res) => {
         if (consumer.rows[0]) {
             user = consumer.rows[0]
             payload = {
-                id: user.id,
+                id: user.customer_id,
                 type: "consumer"
             }
 
@@ -26,7 +26,7 @@ router.post('/login', async (req, res) => {
         if (manager.rows[0]) {
             user = manager.rows[0]
             payload = {
-                id: user.id,
+                id: user.restaurant_id,
                 type: "manager"
             }
         } 
@@ -65,8 +65,8 @@ router.post("/register", async (req, res) => {
   try {
     const { email, password, accountType } = req.body;
 
-    const consumer = await pool.query('SELECT * FROM consumer WHERE email = $1', [email] );
-    const manager = await pool.query('SELECT * FROM restaurant WHERE email = $1', [email] );
+    const consumer = await pool.query('SELECT * FROM customers WHERE email = $1', [email] );
+    const manager = await pool.query('SELECT * FROM restaurants WHERE email = $1', [email] );
 
     // Check if the given email is already in use
     if (consumer.rows.length > 0 || manager.rows.length > 0) {
@@ -81,7 +81,7 @@ router.post("/register", async (req, res) => {
     let newUser;
 
     if (accountType === "manager") {
-        newUser = await pool.query('INSERT INTO restaurant (email, password) VALUES ($1, $2) RETURNING *', [email, hashedPassword] );
+        newUser = await pool.query('INSERT INTO restaurants (email, password) VALUES ($1, $2) RETURNING *', [email, hashedPassword] );
 
         const payload = {
             id: newUser.id,
@@ -94,7 +94,7 @@ router.post("/register", async (req, res) => {
         res.status(200).send({ token, userID: payload.id, userType: payload.type });
     }
     else {
-        newUser = await pool.query('INSERT INTO consumer (email, password) VALUES ($1, $2) RETURNING *', [email, hashedPassword] );
+        newUser = await pool.query('INSERT INTO customers (email, password) VALUES ($1, $2) RETURNING *', [email, hashedPassword] );
 
         const payload = {
             id: newUser.id,

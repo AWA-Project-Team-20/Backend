@@ -8,7 +8,7 @@ const pool = require("../connection");
 // GET all product positions
 router.get("/", async (req, res) => {
     try {
-      const products = await pool.query("SELECT * FROM product");
+      const products = await pool.query("SELECT * FROM products");
       res.json(products.rows);
     } catch (err) {
       console.error(err.message);
@@ -20,7 +20,7 @@ router.get("/:id", async (req, res) => {
     try {
       const products = await pool.query
       (`
-      SELECT * FROM product
+      SELECT * FROM products
       WHERE restaurant_id = ${req.params.id}
       `);
       res.json(products.rows);
@@ -32,13 +32,13 @@ router.get("/:id", async (req, res) => {
   // POST new product position
   router.post("/", authorize, async (req, res) => {
     try {
-      const { restaurant_id, name, description, price, category, image_url } = req.body;
+      const { restaurant_id, product_name, product_description, product_price, product_category, product_image } = req.body;
       const product = await pool.query
       (`
-      INSERT INTO product (restaurant_id, name, description, price, category, image_url)
+      INSERT INTO products (restaurant_id, product_name, product_description, product_price, product_category, product_image)
       VALUES ($1, $2, $3, $4, $5, $6)
       RETURNING *`,
-      [restaurant_id, name, description, price, category, image_url]);
+      [restaurant_id, product_name, product_description, product_price, product_category, product_image]);
       res.json(product.rows[0]);
     } catch (err) {
       console.error(err.message);
@@ -51,10 +51,10 @@ router.get("/:id", async (req, res) => {
       if (req.user.type === "consumer") {
         return res.status(403).json({ error: "You are not a manager!" });
       }
-      const {name, description, price, category, image_url, product_id } = req.body;
+      const {product_name, product_description, product_price, product_category, product_image, product_id } = req.body;
       const updatedProduct = await pool.query(
-          'UPDATE product SET name = $1, description = $2, price = $3, category = $4, image_url = $5 WHERE product_id = $6 RETURNING *',
-          [name, description, price, category, image_url, product_id]
+          'UPDATE products SET product_name = $1, product_description = $2, product_price = $3, product_category = $4, product_image = $5 WHERE product_id = $6 RETURNING *',
+          [product_name, product_description, product_price, product_category, product_image, product_id]
       );
       res.json(updatedProduct.rows[0]);
   

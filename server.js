@@ -6,9 +6,6 @@ const cors = require('cors')
 app.use(express.json());
 app.use(cors());
 
-const customerRouter = require("./routes/customer");
-app.use("/customer", customerRouter);
-
 const restaurantsRouter = require("./routes/restaurants");
 app.use("/restaurants", restaurantsRouter);
 
