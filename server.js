@@ -9,9 +9,6 @@ app.use(cors());
 
 app.use(express.static(path.join(__dirname, "client")));
 
-const customerRouter = require("./routes/customer");
-app.use("/customer", customerRouter);
-
 const restaurantsRouter = require("./routes/restaurants");
 app.use("/restaurants", restaurantsRouter);
 
