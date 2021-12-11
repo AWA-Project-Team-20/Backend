@@ -32,12 +32,13 @@ router.get("/:id", async (req, res) => {
   }
 })
 
+// Update order status
 router.put("/", authorize, async (req, res) => {
   try {
-    const { order_id } = req.body;
+    const { order_id, status } = req.body;
     const updatedOrder = await pool.query(
-        `UPDATE "order" SET status = 'Delivered' WHERE order_id = $1 RETURNING *`,
-        [order_id]
+        `UPDATE "order" SET status = $1 WHERE order_id = $2 RETURNING *`,
+        [status, order_id]
     );
     res.json(updatedOrder.rows[0]);
   } catch (err) {
