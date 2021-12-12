@@ -28,7 +28,38 @@ router.get("/:id", async (req, res) => {
     (`SELECT * FROM order_contents, products WHERE order_id = ${req.params.id} `);
     res.json(orderDetails.rows)
   } catch (err) {
-    console.error(err)  
+    console.error(err.message)  
+  }
+})
+
+// Send a new order
+router.post("/", authorize, async (req, res) => {
+  try {
+    const { restaurant_id, customer_id, order_time, order_status, order_price, order_address } = req.body;
+    const newOrder = await pool.query
+    (`
+    INSERT INTO orders (restaurant_id, customer_id, order_time, order_status, order_price, order_address)
+    VALUES ($1, $2, $3, $4, $5, $6)
+    RETURNING *`,
+    [restaurant_id, customer_id, order_time, order_status, order_price, order_address]);
+    res.json(newOrder.rows[0]); 
+  } catch (err) {
+    console.error(err.message)  
+  }
+})
+
+router.post("/details", authorize, async (req, res) => {
+  try {
+    const { product_key, order_key } = req.body;
+    const newOrderDetails = await pool.query
+    (`
+    INSERT INTO order_contents (product_key, order_key)
+    VALUES ($1, $2)
+    RETURNING *`,
+    [product_key, order_key]);
+    res.json(newOrderDetails.rows[0]); 
+  } catch (err) {
+    console.error(err.message)  
   }
 })
 
@@ -42,7 +73,7 @@ router.put("/", authorize, async (req, res) => {
     );
     res.json(updatedOrder.rows[0]);
   } catch (err) {
-    console.error(err);        
+    console.error(err.message);        
   }
 })
 
@@ -61,7 +92,3 @@ router.delete("/id/:id", async (req, res) => {
 })
 
 module.exports = router;
-
-// POST
-
-// Change
