@@ -10,16 +10,16 @@ app.use(cors());
 app.use(express.static(path.join(__dirname, "client")));
 
 const restaurantsRouter = require("./routes/restaurants");
-app.use("/restaurants", restaurantsRouter);
+app.use("/restaurant", restaurantsRouter);
 
-const managerRouter = require("./routes/manager");
+const managerRouter = require("./routes/managers");
 app.use("/manager/restaurant", managerRouter);
 
-const productRouter = require("./routes/product");
+const productRouter = require("./routes/products");
 app.use("/product", productRouter);
 
 const ordersRouter = require("./routes/orders");
-app.use("/orders", ordersRouter);
+app.use("/order", ordersRouter);
 
 const authRouter = require("./routes/jwtAuth");
 app.use("/auth", authRouter);
