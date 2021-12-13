@@ -4,6 +4,10 @@ const port = process.env.PORT || 4000;
 const cors = require('cors')
 const path = require("path");
 
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static(path.join(__dirname, "Frontend/build")));
+}
+
 app.use(express.json());
 app.use(cors());
 
